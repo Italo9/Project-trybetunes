@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Album from './pages/Album';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
@@ -13,26 +14,28 @@ class App extends React.Component {
     return (
       <section>
         <p>TrybeTunes</p>
-        <nav>
+        {/* <nav>
           <Link to="/">Login</Link>
           <Link to="/search">Login</Link>
           <Link to="/album/:id">Login</Link>
           <Link to="/favorites">Login</Link>
           <Link to="/profile">Login</Link>
           <Link to="/profile/edit">Login</Link>
-        </nav>
-        <main>
-          <Switch>
-            <Route exact path="/" component={ Login } />
-            <Route exact path="/search" component={ Search } />
-            <Route exact path="/album/:id" component={ Album } />
-            <Route exact path="/favorites" component={ Favorites } />
-            <Route exact path="/profile" component={ Profile } />
-            <Route exact path="/profile/edit" component={ ProfileEdit } />
-            <Route exact path="*" component={ NotFound } />
+        </nav> */}
+        <BrowserRouter>
+          <main>
+            <Switch>
+              <Route exact path="/" component={ Login } />
+              <Route exact path="/search" component={ Search } />
+              <Route exact path="/album/:id" component={ Album } />
+              <Route exact path="/favorites" component={ Favorites } />
+              <Route exact path="/profile" component={ Profile } />
+              <Route exact path="/profile/edit" component={ ProfileEdit } />
+              <Route exact path="*" component={ NotFound } />
 
-          </Switch>
-        </main>
+            </Switch>
+          </main>
+        </BrowserRouter>
       </section>
     );
   }
