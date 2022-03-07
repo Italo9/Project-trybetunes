@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Album from './pages/Album';
+import Carregando from './pages/Carregando';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
@@ -31,6 +32,7 @@ class App extends React.Component {
               <Route exact path="/favorites" component={ Favorites } />
               <Route exact path="/profile" component={ Profile } />
               <Route exact path="/profile/edit" component={ ProfileEdit } />
+              <Route exact path="/loading" component={ Carregando } />
               <Route exact path="*" component={ NotFound } />
 
             </Switch>
