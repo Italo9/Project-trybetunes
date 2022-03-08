@@ -5,32 +5,40 @@ import Carregando from '../pages/Carregando';
 
 const INITIAL_STATE = {
   carregando: false,
+  name: '',
 };
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.pessoLogada = this.pessoLogada.bind(this);
+    this.pessoaLogada = this.pessoaLogada.bind(this);
   }
 
-  pessoLogada() {
+  componentDidMount() {
+    this.pessoaLogada();
+  }
+
+  pessoaLogada() {
+    // console.log('fui chamado');
     this.setState({ carregando: true }, () => ((getUser())
-      .then(() => this.setState({ carregando: false }))));
+      .then((nomePessoa) => {
+        // console.log(nomePessoa);
+        this.setState({ carregando: false, name: nomePessoa.name });
+      })));
   }
 
   render() {
     const {
       carregando,
+      name,
     } = this.state;
     return (
       <header data-testid="header-component">
 
         {(!carregando)
           ? (
-            <div data-testid="header-user-name">
-              {this.pessoLogada}
-            </div>)
+            <div data-testid="header-user-name">{ name }</div>)
           : (<Carregando />)}
         <nav>
           <Link data-testid="link-to-search" to="/search">Pesquisar</Link>
