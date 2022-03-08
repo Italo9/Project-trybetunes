@@ -22,9 +22,9 @@ class Header extends React.Component {
   pessoaLogada() {
     // console.log('fui chamado');
     this.setState({ carregando: true }, () => ((getUser())
-      .then((nomePessoa) => {
+      .then((user) => {
         // console.log(nomePessoa);
-        this.setState({ carregando: false, name: nomePessoa.name });
+        this.setState({ carregando: false, name: user.name });
       })));
   }
 
