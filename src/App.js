@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Album from './pages/Album';
 import Carregando from './pages/Carregando';
 import Favorites from './pages/Favorites';
@@ -15,14 +14,6 @@ class App extends React.Component {
     return (
       <section>
         <p>TrybeTunes</p>
-        {/* <nav>
-          <Link to="/">Login</Link>
-          <Link to="/search">Login</Link>
-          <Link to="/album/:id">Login</Link>
-          <Link to="/favorites">Login</Link>
-          <Link to="/profile">Login</Link>
-          <Link to="/profile/edit">Login</Link>
-        </nav> */}
         <BrowserRouter>
           <main>
             <Switch>
