@@ -19,26 +19,17 @@ class Search extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   const {
-  //     albuns,
-  //   } = this.state;
-  //   { <section>
-  //     { albuns.forEach((album) => (<div key={ album.artistId }>{album}</div>)) }
-  //     </section>; }
-  // }
-
   handleClick() {
-    console.log('cheguei aqui');
+    // console.log('cheguei aqui');
     const {
       name,
     } = this.state;
     this.setState({ carregando: true }, () => ((searchAlbumsAPI(name))
       .then((album) => {
-        console.log(album);
+        // console.log(album);
         this.setState(
           { carregando: false,
-            info: `Resultado de álbuns de: ${name}, ${album.artistName}. `,
+            info: `Resultado de álbuns de: ${name}. `,
             albuns: album },
         );
       })
