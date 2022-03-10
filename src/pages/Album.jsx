@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import getMusics from '../services/musicsAPI';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
+import Carregando from './Carregando';
 
 const INITIAL_STATE = {
+  carregando: false,
   info: [],
 };
 class Album extends React.Component {
@@ -23,11 +25,13 @@ class Album extends React.Component {
     // console.log(match);
     const idAlbum = match.params.id;
     // console.log(idAlbum);
-    this.setState(() => ((getMusics(idAlbum))
+    this.setState({ carregando: true }, () => ((getMusics(idAlbum))
       .then((album) => {
-        // console.log(album);
+        console.log(album);
         this.setState(
-          { info: album },
+          { info: album,
+            carregando: false,
+          },
         );
       })
     ));
@@ -36,32 +40,30 @@ class Album extends React.Component {
   render() {
     const {
       info,
+      carregando,
     } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
-        <section>
-          <div data-testid="album-name">
-            {info.map((album) => (
-              <div key={ album.trackId }>
-                <p>{album.collectionName}</p>
-
-              </div>
-
-            ))}
-          </div>
-          <div data-testid="artist-name">
-            {info.map((album) => (
-              <div key={ album.trackId }>
-                <p>{album.artistName}</p>
-              </div>
-            ))}
-          </div>
-          <MusicCard
-            albuns={ info }
-          />
-        </section>
+        {(!carregando) ? (
+          <section>
+            <p data-testid="album-name">{info[0]?.collectionName}</p>
+            <p data-testid="artist-name">{info[0]?.artistName}</p>
+            <div>
+              {info.map((album, i) => (
+                (i > 0) && (
+                  <MusicCard
+                    key={ album.trackId }
+                    trackName={ album.trackName }
+                    previewUrl={ album.previewUrl }
+                    trackId={ album.trackId }
+                    album={ album }
+                  />)
+              ))}
+            </div>
+          </section>) : (<Carregando />)}
       </div>
+
     );
   }
 }
