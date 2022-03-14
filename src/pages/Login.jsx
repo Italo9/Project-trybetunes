@@ -23,6 +23,7 @@ class Login extends React.Component {
     const {
       history,
     } = this.props;
+    // console.log(history);
     this.setState({ carregando: true }, () => ((createUser({ name })).then(
       () => history.push('/search'),
     )
@@ -73,7 +74,9 @@ class Login extends React.Component {
   }
 }
 Login.propTypes = {
-  history: PropTypes.shape.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Login;

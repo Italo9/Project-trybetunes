@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 import Carregando from '../pages/Carregando';
 
 const INITIAL_STATE = {
   carregando: false,
   isFavorite: false,
+  fazNada: '',
 };
 
 class MusicCard extends React.Component {
@@ -24,14 +25,29 @@ class MusicCard extends React.Component {
     const {
       album,
     } = this.props;
-    this.setState({ carregando: true, isFavorite: true }, () => ((addSong(album))
-      .then(() => {
-      // console.log(album);
-        this.setState(
-          { carregando: false,
-          },
-        );
-      })));
+    const {
+      isFavorite,
+    } = this.state;
+    if (!isFavorite) {
+      this.setState({ carregando: true, isFavorite: true }, () => ((addSong(album))
+        .then(() => {
+          // console.log(album);
+          this.setState(
+            { carregando: false,
+            },
+          );
+        })));
+    } else {
+      this.setState({ carregando: true, isFavorite: false }, () => ((removeSong(album))
+        .then(() => {
+          this.setState(
+            {
+              carregando: false,
+              fazNada: '',
+            },
+          );
+        })));
+    }
   }
 
   favoritadaChecked() {
@@ -62,6 +78,7 @@ class MusicCard extends React.Component {
     const {
       carregando,
       isFavorite,
+      fazNada,
     } = this.state;
     return (
       <div>
@@ -86,6 +103,7 @@ class MusicCard extends React.Component {
                   onChange={ this.handleChange }
                 />
               </label>) : (<Carregando />)}
+            {fazNada}
           </div>
         </section>
 
@@ -103,7 +121,7 @@ MusicCard.propTypes = {
     previewUrl: PropTypes.string.isRequired,
     trackId: PropTypes.number.isRequired,
   }).isRequired,
-  favoritas: PropTypes.arrayOf.isRequired,
+  favoritas: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 
 };
 export default MusicCard;
