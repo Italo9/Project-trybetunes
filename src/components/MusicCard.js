@@ -12,10 +12,15 @@ class MusicCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.favoritadaChecked = this.favoritadaChecked.bind(this);
   }
 
-  handleClick() {
+  componentDidMount() {
+    this.favoritadaChecked();
+  }
+
+  handleChange() {
     const {
       album,
     } = this.props;
@@ -29,13 +34,31 @@ class MusicCard extends React.Component {
       })));
   }
 
+  favoritadaChecked() {
+    // console.log('entrou');
+    const {
+      favoritas,
+      album,
+    } = this.props;
+    favoritas.forEach((itemMusica) => {
+      // console.log('entrou no primeiro');
+      if (itemMusica.previewUrl === album.previewUrl) {
+        this.setState({ isFavorite: true });
+        // console.log('funcionou');
+      } else {
+        // console.log('passou do if');
+      }
+    });
+  }
+
   render() {
     const {
       trackName,
       previewUrl,
       trackId,
+      // album,
     } = this.props;
-    console.log(trackName);
+    // console.log(album);
     const {
       carregando,
       isFavorite,
@@ -60,7 +83,7 @@ class MusicCard extends React.Component {
                   id="favorite"
                   name="isFavorite"
                   checked={ isFavorite }
-                  onClick={ this.handleClick }
+                  onChange={ this.handleChange }
                 />
               </label>) : (<Carregando />)}
           </div>
@@ -80,6 +103,7 @@ MusicCard.propTypes = {
     previewUrl: PropTypes.string.isRequired,
     trackId: PropTypes.number.isRequired,
   }).isRequired,
+  favoritas: PropTypes.arrayOf.isRequired,
 
 };
 export default MusicCard;
